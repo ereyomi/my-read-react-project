@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
-import CurrentRead from './CurrentRead';
-import WantToRead from './WantToRead';
-import Read from './Read';
+import BooksShelf from './BooksShelf';
 import { Link } from 'react-router-dom';
 
 class ListBooks extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            shelfs: {
+                currentlyReading: 'Currently Reading',
+                wantToRead: 'Want To Read',
+                read: 'Read',
+            },
+        }
+    }
     render() {
+        const { shelfs } =  this.state;
+        const shelfsKeys = Object.keys(shelfs);
         return (
         <div className="list-books">
             <div className="list-books-title">
@@ -13,10 +23,17 @@ class ListBooks extends Component {
             </div>
             <div className="list-books-content">
               <div>
-
-                <CurrentRead />
-                <WantToRead />
-                <Read />
+                {
+                    shelfsKeys.map((shelfKey) => (
+                        <BooksShelf 
+                        key={shelfKey} 
+                        books={this.props.books} 
+                        shelfKey={shelfKey}
+                        shelfs={shelfs}
+                        />
+                    ))
+                    
+                }
                 
               </div>
             </div>
