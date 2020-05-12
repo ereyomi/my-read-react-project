@@ -13,6 +13,9 @@ class ListBooks extends Component {
             },
         }
     }
+    handleShelfChange = (book, shelfoption) => {
+        this.props.handleShelfChange(book, shelfoption);
+    }
     render() {
         const { shelfs } =  this.state;
         const shelfsKeys = Object.keys(shelfs);
@@ -30,6 +33,7 @@ class ListBooks extends Component {
                         books={this.props.books} 
                         shelfKey={shelfKey}
                         shelfs={shelfs}
+                        handleShelfChange={this.handleShelfChange}
                         />
                     ))
                     

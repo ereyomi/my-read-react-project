@@ -18,20 +18,28 @@ class App extends React.Component {
     searchResult: []
   }
   componentDidMount = () => {
+    this.getBooks();
+  }
+  getBooks = () => {
     BooksAPI.getAll()
     .then((data) => {
-      this.setState((currentState) => (
+      this.setState(() => (
         {
-          books: currentState.books.concat(data)
+          books: [...data]
         }
       ));
     })
   }
+  handleShelfChange = ( book, shelfChangeoption ) => {
+    BooksAPI.update(book, shelfChangeoption)
+    .then((data) => {
+      this.getBooks();
+      }
+    );
+  }
   searchForBooks = query => {
-    console.log("query: ", query);
     BooksAPI.search(query)
     .then((data) => {
-      console.log(data);
       this.setState((currentState) => (
         {
           searchResult: currentState.searchResult.concat(data)
@@ -43,10 +51,12 @@ class App extends React.Component {
     return (
       <div className="app">
         <Route exact path='/' render={() => (
-          <ListBooks books={this.state.books}/>
+          <ListBooks books={this.state.books} handleShelfChange={this.handleShelfChange}/>
         )} />
         <Route exact path='/search' render={() => (
-          <Search onSearchBooks={this.searchForBooks} searchResult={this.state.searchResult}/>
+          <Search onSearchBooks={this.searchForBooks} 
+          searchResult={this.state.searchResult} 
+          handleShelfChange={this.handleShelfChange}/>
         )} />
       </div>
     );
