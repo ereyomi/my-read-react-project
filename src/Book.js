@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BookShelfChanger from './BookShelfChanger';
-import noPreview from './no-image-found.jpg';
+import noPreview from './No_picture_available.png';
 class Book extends Component {
     state = {
         shelf: ''
