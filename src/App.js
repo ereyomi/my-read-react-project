@@ -14,10 +14,11 @@ class App extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    books: []
+    books: [],
+    searchResult: []
   }
-  componentDidMount = async() => {
-    await BooksAPI.getAll()
+  componentDidMount = () => {
+    BooksAPI.getAll()
     .then((data) => {
       this.setState((currentState) => (
         {
@@ -26,15 +27,27 @@ class App extends React.Component {
       ));
     })
   }
-
+  searchForBooks = query => {
+    console.log("query: ", query);
+    BooksAPI.search(query)
+    .then((data) => {
+      console.log(data);
+      this.setState((currentState) => (
+        {
+          searchResult: currentState.searchResult.concat(data)
+        }
+      ))
+    })
+  }
   render() {
     return (
       <div className="app">
         <Route exact path='/' render={() => (
           <ListBooks books={this.state.books}/>
         )} />
-        
-        <Route exact path='/search' component={Search} />
+        <Route exact path='/search' render={() => (
+          <Search onSearchBooks={this.searchForBooks} searchResult={this.state.searchResult}/>
+        )} />
       </div>
     );
   }

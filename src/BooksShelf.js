@@ -8,9 +8,10 @@ const BooksShelf = props => {
             <h2 className="bookshelf-title">{shelfs[shelfKey]}</h2>
             <div className="bookshelf-books">
             <ol className="books-grid">
-                { books.filter((book) => book.shelf === shelfKey).map((book) => (
+                { 
+                    books.filter((book) => book.shelf === shelfKey).map((book) => (
                     <Book key={book.id} bookData={book}/>
-                ))
+                    ))
                 }
             </ol>
             </div>

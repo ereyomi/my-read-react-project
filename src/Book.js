@@ -2,7 +2,8 @@ import React from 'react';
 import BookShelfChanger from './BookShelfChanger';
 
 const Book = props => {
-    const { id, title, authors, imageLinks } = props.bookData;
+    const { authors, id, title, imageLinks } = props.bookData;
+    console.log("title: ", title, "authors: ", authors)
     return (
         <li key={id}>
             <div className="book">
@@ -14,12 +15,14 @@ const Book = props => {
                 <div className="book-authors">
                     <ol>
                         {
-                            authors.map((author) => (
-                                <li key={author}>{author}</li>
-                            ))
+                            authors && (
+                                authors.map((author, index) => (
+                                    <li key={index}>{author}</li>
+                                ))
+                            )
                         }
                     </ol>
-                </div>
+                </div> 
             </div>
         </li>
     );
