@@ -18,6 +18,13 @@ class BookShelfChanger extends Component {
             resolve(true);
         });        
     }
+    mountShelfStatus = shelfStatus => {
+        try {
+            return typeof shelfStatus === 'undefined' ? 'none' : shelfStatus;
+        } catch (error) {
+            return 'none';
+        }
+    }
     onChangeMyshelf = async(event) => {
         const selectedOption = event.target.value;
         try {
@@ -29,7 +36,7 @@ class BookShelfChanger extends Component {
     }
     componentDidMount = () => {
         this.setState({
-            shelfOption: this.props.shelf
+            shelfOption: this.mountShelfStatus(this.props.shelf)
         })
     }
     render() {
