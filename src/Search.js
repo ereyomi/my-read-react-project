@@ -2,17 +2,25 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import serializeForm from 'form-serialize';
 import Book from './Book';
-
+// import debounce from './debounce';
 class Search extends Component{
     handleSearch = event => {
         event.preventDefault();
         const value = serializeForm(event.target, { hash: true });
-        const searchValue = value.search;
-        this.props.onSearchBooks(searchValue);
+        this.props.onSearchBooks(value.search);
+    }
+    setSearchQuery = query => {
+      this.setState({
+        searchQuery: query
+      });
     }
     handleShelfChange = (book, shelf) => {
       this.props.handleShelfChange(book, shelf);
     }
+    ifEmpty = () => {
+
+    }
+    
     render() {
         const { searchResult } =  this.props;
         return (
@@ -40,9 +48,11 @@ class Search extends Component{
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                    { searchResult.map((book, index) => (
+                    { 
+                      searchResult.length !== 0 ? (searchResult.map((book, index) => (
                         <Book key={index} bookData={book} onChangeShelf={this.handleShelfChange}/>
-                    ))
+                      ))
+                       ) : (<p>no result</p>)
                     }   
                 </ol>
 

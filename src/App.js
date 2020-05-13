@@ -17,17 +17,20 @@ class App extends React.Component {
     books: [],
     searchResult: []
   }
+  handleSetState = (key, data) => {
+    this.setState(() => (
+      {
+        [key]: [...data]
+      }
+    ))
+  }
   componentDidMount = () => {
     this.getBooks();
   }
   getBooks = () => {
     BooksAPI.getAll()
     .then((data) => {
-      this.setState(() => (
-        {
-          books: [...data]
-        }
-      ));
+      this.handleSetState('books', data)
     })
   }
   handleShelfChange = ( book, shelfChangeoption ) => {
@@ -40,11 +43,11 @@ class App extends React.Component {
   searchForBooks = query => {
     BooksAPI.search(query)
     .then((data) => {
-      this.setState((currentState) => (
-        {
-          searchResult: currentState.searchResult.concat(data)
-        }
-      ))
+      if (data.error || typeof data === 'undefined') {
+        this.handleSetState('searchResult', data.items);
+      } else {
+        this.handleSetState('searchResult', data);
+      }
     })
   }
   render() {
