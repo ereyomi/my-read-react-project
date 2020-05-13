@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import BookShelfChanger from './BookShelfChanger';
 import noPreview from './No_picture_available.png';
-class Book extends Component {
+class Book extends PureComponent {
     state = {
         shelf: ''
     }

@@ -33,10 +33,11 @@ class BookShelfChanger extends Component {
         })
     }
     render() {
+        const { shelfOption } = this.state;
         return (
             <div className="book-shelf-changer">
                 <select 
-                value={this.state.shelfOption}
+                value={shelfOption}
                 onChange={this.onChangeMyshelf}>
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
