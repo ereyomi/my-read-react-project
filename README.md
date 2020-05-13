@@ -7,5 +7,5 @@ Install `npm` or `yarn` if you dont have any of them already installed. I recomm
 After clonning the repo to your local machine and moving into the cloned folder, Run `yarn install` or `npm install` to get started by installing dependencies. 
 
 ## Usage
-`npm start`
+`npm start` .
 `src/index.js` is the entry to the project and source code should go into the `src` folder.
