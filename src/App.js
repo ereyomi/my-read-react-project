@@ -8,14 +8,9 @@ import ListBooks from './ListBooks';
 
 class App extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
     books: [],
-    searchResult: []
+    searchResult: [],
+    searchData:[]
   }
   handleSetState = (key, data) => {
     this.setState(() => (
@@ -46,9 +41,17 @@ class App extends React.Component {
       if (data.error || typeof data === 'undefined') {
         this.handleSetState('searchResult', data.items);
       } else {
-        this.handleSetState('searchResult', data);
+        this.checkIfAnyBookExistInSearch(data);
       }
     })
+  }
+  checkIfAnyBookExistInSearch = dataReceived => {
+    const { books } = this.state;
+    books.forEach((book, index) => {
+      let bookindex = dataReceived.findIndex(data => data.id === book.id);
+      if (bookindex > -1) { dataReceived.splice(bookindex, 1, book) }
+    });
+    this.handleSetState('searchResult', dataReceived);
   }
   render() {
     return (

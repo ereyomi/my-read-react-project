@@ -1,14 +1,8 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import serializeForm from 'form-serialize';
 import Book from './Book';
 import { debounce } from './Debounce';
-class Search extends PureComponent{
-    handleSearch = event => {
-        event.preventDefault();
-        const value = serializeForm(event.target, { hash: true });
-        this.props.onSearchBooks(value.search);
-    }
+class Search extends Component{
     handleSearchChange = debounce((text) => {
       this.props.onSearchBooks(text);
      }, 1000)
@@ -31,14 +25,14 @@ class Search extends PureComponent{
                     However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                     you don't find a specific author or title. Every search is limited by search terms.
                   */}
-                  <form>
+                  <div>
                     <input 
                         type="text" 
                         placeholder="Search by title or author"
                         name="search"
                         onChange={(event) => this.handleSearchChange(event.target.value)}
                     />
-                  </form>
+                  </div>
   
                 </div>
               </div>
