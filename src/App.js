@@ -38,14 +38,21 @@ class App extends React.Component {
   searchForBooks = query => {
     BooksAPI.search(query)
     .then((data) => {
-      if (data.error || typeof data === 'undefined') {
-        this.handleSetState('searchResult', data.items);
+      if (this.checkDataExist(data)) {
+        this.checkIfShelfBookExistInSearch(data);
       } else {
-        this.checkIfAnyBookExistInSearch(data);
+        this.handleSetState('searchResult', []);
       }
     })
   }
-  checkIfAnyBookExistInSearch = dataReceived => {
+  checkDataExist = data => {
+    try{
+      return data.error ? false : true;
+    }catch(error){
+      return false;
+    }
+  }
+  checkIfShelfBookExistInSearch = dataReceived => {
     const { books } = this.state;
     books.forEach((book, index) => {
       let bookindex = dataReceived.findIndex(data => data.id === book.id);
